@@ -1,8 +1,8 @@
 
 -- source ~/Documents/Harvard/Extracurricular/HSA\ Dev/bodysync/backend/config/dev-db-script.sql
 
-DROP DATABASE bodysync;
+DROP DATABASE prompttherapy;
 
-CREATE DATABASE bodysync;
+CREATE DATABASE prompttherapy;
 
-USE bodysync;
+USE prompttherapy;

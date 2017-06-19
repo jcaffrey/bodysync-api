@@ -1,4 +1,5 @@
-USE prompttherapy;
+USE bodysync;
+
 insert into
     pts (name, hash, email, isAdmin, createdAt, updatedAt)
 values

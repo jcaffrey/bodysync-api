@@ -3,7 +3,7 @@
     "username": "root",
     "password": null,
     "_comment": "connect w/ a mysql client to a running instance of mysql server and be sure there's a db bodysync",
-    "database": "bodysync",
+    "database": "prompttherapy",
     "host": "127.0.0.1",
     "dialect": "mysql",
     "emailFromName": "Prompt Therapy Solutions",
@@ -20,10 +20,10 @@
     "dialect": "mysql"
   },
   "production": {
-    "username": "b5e6c7c87a412c",
-    "password": "10c182d1",
-    "database": "heroku_0e8f5ec101ddcc6",
-    "host": "us-cdbr-iron-east-03.cleardb.net",
+    "username": "prompttherapy",
+    "password": "JUc8Gp8B1kZ0zfM",
+    "database": "prompttherapy",
+    "host": "zsrnmd7f.db.healthcareblocks.com",
     "frontend": "https://secure-falls-33539.herokuapp.com",
     "emailFromName": "Prompt Therapy Solutions",
     "emailFromAddr": "prompttherapysolutions@gmail.com",
