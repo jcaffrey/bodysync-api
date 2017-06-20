@@ -48,6 +48,7 @@ exports.updateVerified = (req, res, next) => {
 }
 
 exports.loginPt = (req, res, next) => {
+    console.log('PRINGINT THE ENV...' + env);
     if (typeof req.body.email !== 'string')
         return res.status(400).send('No email');
     if (typeof req.body.password !== 'string') // plaintext passworc
