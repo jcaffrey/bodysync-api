@@ -7,6 +7,8 @@ var env = process.env.NODE_ENV || 'development';
 var config = require('../config/config.json')[env];
 var nodemailer = require('nodemailer');
 var Mailgen = require('mailgen');
+var ses = require('nodemailer-ses-transport');
+
 
 exports.updateVerified = (req, res, next) => {
     var token = req.query.token || req.body.token || req.headers['x-access-token'];
@@ -149,13 +151,17 @@ exports.forgotPassword = (req, res, next) => {
     if (typeof req.body.isPt !== 'boolean' && typeof req.body.isPt !== 'string')
         return res.status(400).send('No isPt flag');
 
-    var transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: config.emailFromAddr,
-            pass: config.emailPw
-        }
-    });
+    // var transporter = nodemailer.createTransport({
+    //     service: 'gmail',
+    //     auth: {
+    //         user: config.emailFromAddr,
+    //         pass: config.emailPw
+    //     }
+    // });
+    var transporter = nodemailer.createTransport(ses({
+        accessKeyId: config[env].AWS_ACCESS_KEY_ID,
+        secretAccessKey: config[env].AWS_SECRET_ACCESS_KEY
+    }));
 
     if(!req.body.isPt)
     {
@@ -202,7 +208,7 @@ exports.forgotPassword = (req, res, next) => {
 
                     var mailOptions = {
                         to: req.body.email,
-                        from: `"${config.emailFromName}"<${config.emailFromAddr}>`,
+                        from: 'prompttherapysolutions@gmail.com',
                         subject: 'Forgot Password',
                         html: emailBody,
                         text: emailText,
@@ -266,7 +272,7 @@ exports.forgotPassword = (req, res, next) => {
 
                     var mailOptions = {
                         to: req.body.email,
-                        from: `"${config.emailFromName}"<${config.emailFromAddr}>`,
+                        from: 'prompttherapysolutions@gmail.com',
                         subject: 'Forgot Password',
                         html: emailBody,
                         text: emailText,
@@ -296,6 +302,11 @@ exports.resetPassword = (req, res, next) => {
         return res.status(400).send('no isPt bool')
     if(typeof req.body.newPassword !== 'string')
         return res.status(400).send('no new pw')
+
+      var transporter = nodemailer.createTransport(ses({
+        accessKeyId: config[env].AWS_ACCESS_KEY_ID,
+        secretAccessKey: config[env].AWS_SECRET_ACCESS_KEY
+      }));
 
     if(!req.body.isPt)
     {
@@ -331,7 +342,7 @@ exports.resetPassword = (req, res, next) => {
                                 button: {
                                     color: '#2e3192',
                                     text: 'Login',
-                                    link: config.frontendRoute + '/login/'
+                                    link: config.frontendServer + '/login/'
                                 }
 
                             }
@@ -343,7 +354,7 @@ exports.resetPassword = (req, res, next) => {
 
                     var mailOptions = {
                         to: req.body.email,
-                        from: `"${config.emailFromName}"<${config.emailFromAddr}>`,
+                        from: 'prompttherapysolutions@gmail.com',
                         subject: 'Reset Successful',
                         html: emailBody,
                         text: emailText,
@@ -394,7 +405,7 @@ exports.resetPassword = (req, res, next) => {
                                 button: {
                                     color: '#2e3192',
                                     text: 'Login',
-                                    link: config.frontendRoute + '/login/'
+                                    link: config.frontendServer + '/login/'
                                 }
 
                             }
@@ -406,7 +417,7 @@ exports.resetPassword = (req, res, next) => {
 
                     var mailOptions = {
                         to: req.body.email,
-                        from: `"${config.emailFromName}"<${config.emailFromAddr}>`,
+                        from: 'prompttherapysolutions@gmail.com',
                         subject: 'Reset Successful',
                         html: emailBody,
                         text: emailText,

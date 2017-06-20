@@ -10,7 +10,9 @@
     "emailFromAddr": "prompttherapysolutions@gmail.com",
     "emailPw": "HSADev678",
     "secret": "thisisthesecret",
-    "frontendServer": "localhost:3001"
+    "frontendServer": "localhost:3001",
+    "AWS_ACCESS_KEY_ID": "AKIAI5SG5LBSUSQCYM4Q",
+    "AWS_SECRET_ACCESS_KEY": "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"
   },
   "test": {
     "username": "root",
@@ -24,11 +26,13 @@
     "password": "JUc8Gp8B1kZ0zfM",
     "database": "prompttherapy",
     "host": "zsrnmd7f.db.healthcareblocks.com",
-    "frontend": "https://secure-falls-33539.herokuapp.com",
+    "frontend": "http://bodysync-front.h8wv74ic.healthcareblocks.com/",
     "emailFromName": "Prompt Therapy Solutions",
     "emailFromAddr": "prompttherapysolutions@gmail.com",
     "emailPw": "HSADev678",
     "dialect": "mysql",
-    "frontendServer": "https://secure-falls-33539.herokuapp.com"
+    "frontendServer": "http://bodysync-front.h8wv74ic.healthcareblocks.com/",
+    "AWS_ACCESS_KEY_ID": "AKIAI5SG5LBSUSQCYM4Q",
+    "AWS_SECRET_ACCESS_KEY": "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"
   }
 }

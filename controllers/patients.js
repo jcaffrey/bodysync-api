@@ -12,6 +12,7 @@ var env = process.env.NODE_ENV || 'development';
 var config = require('../config/config.json')[env];
 var nodemailer = require('nodemailer');
 var Mailgen = require('mailgen');
+var ses = require('nodemailer-ses-transport');
 
 
 /**
@@ -54,19 +55,24 @@ module.exports.createPatient = (req, res, next) => {
                         pat.forgotToken = token;
                         pat.save().then(() => {
                             // email patient
-                            var transporter = nodemailer.createTransport({
-                                service: 'gmail',
-                                auth: {
-                                    user: config.emailFromAddr,
-                                    pass: config.emailPw
-                                }
-                            });
+                            // var transporter = nodemailer.createTransport({
+                            //     service: 'gmail',
+                            //     auth: {
+                            //         user: config.emailFromAddr,
+                            //         pass: config.emailPw
+                            //     }
+                            // });
+
+                            var transporter = nodemailer.createTransport(ses({
+                            accessKeyId: config[env].AWS_ACCESS_KEY_ID,
+                            secretAccessKey: config[env].AWS_SECRET_ACCESS_KEY
+                            }));
 
                             var mailGenerator = new Mailgen({
                                 theme: 'default',
                                 product: {
                                     name: 'Prompt Therapy Solutions',
-                                    link: 'LINK TO THE WEBSITE'
+                                    link: config.frontendServer
                                 }
                             });
 
@@ -74,14 +80,13 @@ module.exports.createPatient = (req, res, next) => {
                                 body: {
                                     intro: 'Welcome to Prompt Therapy Solutions - the road to recovery starts here!',
                                     action: {
-                                        instructions: 'To get started with Prompt Therapy Solutions, please click here:',
                                         button : {
                                             color: '#2e3192',
                                             text: 'Set your password',
-                                            link: config.frontendRoute + '/reset/' + token
+                                            link: config.frontendServer + '/reset/' + token
                                         }
                                     },
-                                    outro: 'Need help, or have questions? Just reply to this email, we\'d love to help.'
+                                    outro: 'Need help, or have questions? Just reply to this email.'
                                 }
                             }
 
@@ -90,7 +95,7 @@ module.exports.createPatient = (req, res, next) => {
 
                             var mailOptions = {
                                 to: req.body.email,
-                                from: `"${config.emailFromName}"<${config.emailFromAddr}>`,
+                                from: 'prompttherapysolutions@gmail.com',
                                 subject: 'Welcome',
                                 html: emailBody,
                                 text: emailText
