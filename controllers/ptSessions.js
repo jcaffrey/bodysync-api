@@ -62,7 +62,7 @@ module.exports.handleSession = (req, res, next) => {
                                 var data = [];
                                 for(var i = 0; i < pat.length; i++)
                                 {
-                                    console.log('patId' + pat[i].id);
+                                    // console.log('patId' + pat[i].id);
                                     data.push({
                                         ptId: decoded.id,
                                         sessionNumber: decoded.sessionNumber,
@@ -87,7 +87,7 @@ module.exports.handleSession = (req, res, next) => {
                         var data = [];
                         for(var i = 0; i < pat.length; i++)
                         {
-                            console.log('patId' + pat[i].id);
+                            // console.log('patId' + pat[i].id);
                             data.push({
                                 ptId: decoded.id,
                                 sessionNumber: decoded.sessionNumber,
@@ -109,7 +109,8 @@ module.exports.handleSession = (req, res, next) => {
             }
             else
             {
-                return res.status(404).send('no patients to log')
+                // console.log('no patients to log yet');
+                return;
             }
         }).catch(function(err) {
             return next(err);
@@ -154,7 +155,7 @@ module.exports.handleSession = (req, res, next) => {
             }
             else
             {
-                return res.status(404).send('no rows to update')
+                return;
             }
         });
     }
@@ -214,7 +215,7 @@ module.exports.handleSession = (req, res, next) => {
             }
             else
             {
-                return res.status(404).send('no rows to update')
+                return;
             }
         }).catch(function (err) {
             return next(err);

@@ -9,10 +9,8 @@ var config    = require(__dirname + '/../config/config.json')[env];
 var db        = {};
 
 if (config.use_env_variable) {
-  console.log('PRINTING IN INDEX IF IF IF' + config.database);
   var sequelize = new Sequelize(process.env[config.use_env_variable]);
 } else {
-  console.log('PRINTING IN INDEX ELSE ELSE database: ' + config.database);
   var sequelize = new Sequelize(config.database, config.username, config.password, config);
 }
 

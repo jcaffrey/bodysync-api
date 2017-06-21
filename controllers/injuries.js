@@ -34,6 +34,7 @@ module.exports.createInjury = (req, res, next) => {
                         //return next();
                     }
                     else {
+                        console.log('FAILED HERE')
                         return res.status(404).send('Could not create that injury')
                     }
                 }).catch(function(err) {

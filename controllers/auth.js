@@ -87,7 +87,11 @@ exports.loginPt = (req, res, next) => {
                         });
                 } else {
                     console.log('LOGGING IN A NEW SESSION')
-                    var payload = {id: pt.id, isPt: true, sessionNumber: 1, isAdmin: pt.isAdmin};
+                    var sessionInit = 1;
+
+                    var payload = {id: pt.id, isPt: true, sessionNumber: sessionInit, isAdmin: pt.isAdmin};
+
+                    console.log('MADE IT PAST PAYLOAD')
 
 
                     var token = jwt.sign(payload, config.secret, {expiresIn: 60*60 }); // expiresIn is in seconds

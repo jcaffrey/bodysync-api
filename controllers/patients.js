@@ -34,6 +34,7 @@ module.exports.createPatient = (req, res, next) => {
             if(Object.keys(user).length !== 0) {
                 return res.status(405).send('sorry that email is taken');
             } else {
+                console.log('ABOUT TO CREATE PATIENT..')
                 models.patient.create({
                     name: req.body.name,
                     email: req.body.email,
@@ -45,7 +46,7 @@ module.exports.createPatient = (req, res, next) => {
                     age: req.body.age,
                     weight: req.body.weight,
                     ptId: req.params.id,
-                    hash: "temp" // add hash and token
+                    hash: "temp"
                 }).then(function(pat) {
                     if(Object.keys(pat).length !== 0)
                     {
@@ -63,50 +64,50 @@ module.exports.createPatient = (req, res, next) => {
                             //     }
                             // });
 
-                            var transporter = nodemailer.createTransport(ses({
-                            accessKeyId: config[env].AWS_ACCESS_KEY_ID,
-                            secretAccessKey: config[env].AWS_SECRET_ACCESS_KEY
-                            }));
+                        var transporter = nodemailer.createTransport(ses({
+                            accessKeyId: config.AWS_ACCESS_KEY_ID,
+                            secretAccessKey: config.AWS_SECRET_ACCESS_KEY
+                        }));
 
-                            var mailGenerator = new Mailgen({
-                                theme: 'default',
-                                product: {
-                                    name: 'Prompt Therapy Solutions',
-                                    link: config.frontendServer
-                                }
-                            });
-
-                            var e = {
-                                body: {
-                                    intro: 'Welcome to Prompt Therapy Solutions - the road to recovery starts here!',
-                                    action: {
-                                        button : {
-                                            color: '#2e3192',
-                                            text: 'Set your password',
-                                            link: config.frontendServer + '/reset/' + token
-                                        }
-                                    },
-                                    outro: 'Need help, or have questions? Just reply to this email.'
-                                }
+                        var mailGenerator = new Mailgen({
+                            theme: 'default',
+                            product: {
+                                name: 'Prompt Therapy Solutions',
+                                link: config.frontendServer
                             }
+                        });
 
-                            var emailBody = mailGenerator.generate(e);
-                            var emailText = mailGenerator.generatePlaintext(e);
+                        var e = {
+                            body: {
+                                intro: 'Welcome to Prompt Therapy Solutions - the road to recovery starts here!',
+                                action: {
+                                    button : {
+                                        color: '#2e3192',
+                                        text: 'Set your password',
+                                        link: config.frontendServer + '/reset/' + token
+                                    }
+                                },
+                                outro: 'Need help, or have questions? Just reply to this email.'
+                            }
+                        }
 
-                            var mailOptions = {
-                                to: req.body.email,
-                                from: 'prompttherapysolutions@gmail.com',
-                                subject: 'Welcome',
-                                html: emailBody,
-                                text: emailText
-                            };
-                            transporter.sendMail(mailOptions, function (err) {
-                                if(err)
-                                    return next(err); // test this.
-                            });
+                        var emailBody = mailGenerator.generate(e);
+                        var emailText = mailGenerator.generatePlaintext(e);
 
-                            return res.json(pat);
-                            //return next();
+                        var mailOptions = {
+                            to: req.body.email,
+                            from: 'prompttherapysolutions@gmail.com',
+                            subject: 'Welcome',
+                            html: emailBody,
+                            text: emailText
+                        };
+                        transporter.sendMail(mailOptions, function (err) {
+                            if(err)
+                                return next(err); // test this.
+                        });
+
+                        return res.json(pat);
+                        //return next();
                         }).catch(function (err) {
                             // console.log('did not save')
                             return next(err);
@@ -148,7 +149,10 @@ module.exports.getPatients = (req, res, next) => {
             }
 
         }).then(function(patients) {
-            return res.json(patients);
+            if(patients && patients.length !== 0)
+                return res.json(patients);
+            else
+                return res.status(404).send('none foound');
             // var pIds = [];
             // for (var p in patients) {
             //     pIds.push(patients[p].id);
