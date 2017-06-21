@@ -164,8 +164,8 @@ exports.forgotPassword = (req, res, next) => {
     //     }
     // });
     var transporter = nodemailer.createTransport(ses({
-        accessKeyId: config[env].AWS_ACCESS_KEY_ID,
-        secretAccessKey: config[env].AWS_SECRET_ACCESS_KEY
+        accessKeyId: config.AWS_ACCESS_KEY_ID,
+        secretAccessKey: config.AWS_SECRET_ACCESS_KEY
     }));
 
     if(!req.body.isPt)
@@ -309,8 +309,8 @@ exports.resetPassword = (req, res, next) => {
         return res.status(400).send('no new pw')
 
       var transporter = nodemailer.createTransport(ses({
-        accessKeyId: config[env].AWS_ACCESS_KEY_ID,
-        secretAccessKey: config[env].AWS_SECRET_ACCESS_KEY
+        accessKeyId: config.AWS_ACCESS_KEY_ID,
+        secretAccessKey: config.AWS_SECRET_ACCESS_KEY
       }));
 
     if(!req.body.isPt)

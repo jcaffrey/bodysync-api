@@ -8,6 +8,9 @@ var jwt = require('jsonwebtoken');
 var auth = require('./auth');
 var env = process.env.NODE_ENV || 'development';
 var config = require('../config/config.json')[env];
+var nodemailer = require('nodemailer');
+var Mailgen = require('mailgen');
+var ses = require('nodemailer-ses-transport');
 
 /**
 
@@ -16,7 +19,12 @@ var config = require('../config/config.json')[env];
  */
 
 module.exports.createPt = (req, res, next) => {
-    // TODO add in authentication to make sure the admin is who their token says they are?
+   var transporter = nodemailer.createTransport(ses({
+        accessKeyId: config.AWS_ACCESS_KEY_ID,
+        secretAccessKey: config.AWS_SECRET_ACCESS_KEY
+    }));
+
+
     models.pt.create({
         name: req.body.name,
         email: req.body.email,
@@ -26,6 +34,42 @@ module.exports.createPt = (req, res, next) => {
         isAdmin: false,
         hash: 'temp'
     }).then(function(pt) {
+        var mailGenerator = new Mailgen({
+        theme: 'default',
+        product: {
+          name: 'Prompt Therapy Solutions',
+          link: config.frontendServer
+        }
+        });
+
+        var e = {
+        body: {
+          intro: 'Welcome to Prompt Therapy Solutions',
+          action: {
+            button : {
+              color: '#2e3192',
+              text: 'Set your password',
+              link: config.frontendServer + '/reset/' + token + '/true'
+            }
+          },
+          outro: 'Need help, or have questions? Just reply to this email.'
+        }
+        }
+
+        var emailBody = mailGenerator.generate(e);
+        var emailText = mailGenerator.generatePlaintext(e);
+
+        var mailOptions = {
+        to: req.body.email,
+        from: 'prompttherapysolutions@gmail.com',
+        subject: 'Welcome',
+        html: emailBody,
+        text: emailText
+        };
+        transporter.sendMail(mailOptions, function (err) {
+        if(err)
+          return next(err); // test this.
+        });
         return res.json(pt);
         //return next();
     });
