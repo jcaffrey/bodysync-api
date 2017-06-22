@@ -56,7 +56,7 @@ module.exports.createPt = (req, res, next) => {
                 button : {
                   color: '#2e3192',
                   text: 'Set your password',
-                  link: config.frontendServer + '/reset/' + token + '/true'
+                  link: config.frontendServer + '/reset-token/' + token + '/true'
                 }
               },
               outro: 'Need help, or have questions? Just reply to this email.'

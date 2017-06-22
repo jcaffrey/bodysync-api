@@ -84,7 +84,7 @@ module.exports.createPatient = (req, res, next) => {
                                     button : {
                                         color: '#2e3192',
                                         text: 'Set your password',
-                                        link: config.frontendServer + '/reset/' + token
+                                        link: config.frontendServer + '/reset-token/' + token + '/' + false
                                     }
                                 },
                                 outro: 'Need help, or have questions? Just reply to this email.'
@@ -152,7 +152,7 @@ module.exports.getPatients = (req, res, next) => {
             if(patients && patients.length !== 0)
                 return res.json(patients);
             else
-                return res.status(404).send('none foound');
+                return res.json([]);
             // var pIds = [];
             // for (var p in patients) {
             //     pIds.push(patients[p].id);

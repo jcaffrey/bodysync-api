@@ -303,7 +303,8 @@ exports.forgotPassword = (req, res, next) => {
 // if frontend recieves success from here, they should redirect to login
 
 exports.resetPassword = (req, res, next) => {
-    if(typeof req.body.isPt !== 'boolean')
+    console.log(typeof req.body.isPt)
+    if(typeof req.body.isPt !== 'boolean' || typeof req.body.isPt !== 'string')
         return res.status(400).send('no isPt bool')
     if(typeof req.body.newPassword !== 'string')
         return res.status(400).send('no new pw')
@@ -313,7 +314,7 @@ exports.resetPassword = (req, res, next) => {
         secretAccessKey: config.AWS_SECRET_ACCESS_KEY
       }));
 
-    if(!req.body.isPt)
+    if(req.body.isPt == 'false')
     {
         models.patient.findOne({
             where: {
