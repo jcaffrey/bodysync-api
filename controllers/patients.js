@@ -83,7 +83,7 @@ module.exports.createPatient = (req, res, next) => {
                                 action: {
                                     button : {
                                         color: '#2e3192',
-                                        text: 'Set your password',
+                                        text: 'Create your password',
                                         link: config.frontendServer + '/reset-token/' + token + '/' + false
                                     }
                                 },
