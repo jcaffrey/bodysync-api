@@ -168,7 +168,7 @@ exports.forgotPassword = (req, res, next) => {
         secretAccessKey: config.AWS_SECRET_ACCESS_KEY
     }));
 
-    if(!req.body.isPt)
+    if(req.body.isPt == 'false')
     {
         models.patient.findOne({
             where: {
@@ -182,8 +182,7 @@ exports.forgotPassword = (req, res, next) => {
 
                 pat.forgotToken = token;
 
-                var patPromise = pat.save();
-                patPromise.then((pat) => {
+                pat.save().then(function(patient) {
 
                     var mailGenerator = new Mailgen({
                         theme: 'default',
