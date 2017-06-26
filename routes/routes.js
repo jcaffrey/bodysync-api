@@ -51,20 +51,11 @@ router.route('/ptSessions/:patientId')  // logout will get -2 for patientId
 router.route('/agree')
     .get(auth.tokenRequired, auth.updateVerified);
 
-// router.route('/login/pt')
-//     .post(auth.loginPt, ptSessions.createSession);  // keep this?
-
-router.route('/agree')
-    .get(auth.tokenRequired, auth.updateVerified);
-
 router.route('/login/pt')
     .post(auth.loginPt, ptSessions.createSession);   // keep this?
 
 router.route('/login/patient')
     .post(auth.loginPatient);
-
-// router.route('/logoff')
-//     .get(auth.ptRequired, ptSessions.updateSession);
 
 router.route('/forgotpassword') 
     .post(auth.forgotPassword);
