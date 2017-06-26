@@ -105,14 +105,8 @@ module.exports.deletePt = (req, res, next) => {
         where: {
             id: req.params.id
         }
-    }).then(function(instance) {
-        if (instance)
-        {
-            return res.sendStatus(200);
-            //return next();
-        }
-        else
-            res.status(404).send('sorry not found');
+    }).then(function() {
+        return res.sendStatus(200);
     });
 }
 
