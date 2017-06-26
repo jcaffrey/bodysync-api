@@ -34,7 +34,7 @@ var auth = require('../controllers/auth');
 // root of api 
 router.route('/')
     .get(function(req, res) {
-        res.send('Welcome to the bodysync API. See /backend/app.js for useful endpoints!');
+        res.send('Welcome to the BodySync Backend Server. See /backend/app.js for useful endpoints!');
      });
 
 // routes to sign-in and create token 
