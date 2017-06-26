@@ -17,7 +17,7 @@ module.exports = function(sequelize, DataTypes) {
         },
         proPicUrl: {
             type: DataTypes.STRING,
-            defaultValue: 'https://s3.amazonaws.com/bodysync-photo-upload/Josh+Seides.jpg',
+            defaultValue: 'https://s3.amazonaws.com/bodysync-photo-upload/default-profile-img.png',
             allowNull: true
         },
         surgeryType: {

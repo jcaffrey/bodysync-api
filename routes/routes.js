@@ -47,7 +47,6 @@ router.route('/')
 router.route('/ptSessions/:patientId')  // logout will get -2 for patientId
     .get(auth.ptRequired, ptSessions.handleSession);
 
-
 router.route('/agree')
     .get(auth.tokenRequired, auth.updateVerified);
 
