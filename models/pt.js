@@ -12,6 +12,9 @@ module.exports = function(sequelize, DataTypes) {
             type: DataTypes.STRING,
             allowNull: false
         },
+        isVerified: {
+            type: DataTypes.BOOLEAN
+        },
         hash: {
             type: DataTypes.STRING,
             allowNull: false

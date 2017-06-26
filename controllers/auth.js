@@ -175,13 +175,16 @@ exports.forgotPassword = (req, res, next) => {
                 email: req.body.email
             }
         }).then(function (pat) {
-            if(Object.keys(pat).length !== 0)
+            if(pat && Object.keys(pat).length !== 0)
             {
+                console.log('FOUND PATIENT ')
                 var payload = {id: pat.id, sessionNumber: null, isPt: false, isAdmin: false};
                 var token = jwt.sign(payload, config.secret, {expiresIn: 60 * 60});
+                console.log('GOT PAST PAYLOAD')
 
                 pat.forgotToken = token;
-                pat.save().then(() => {
+
+                pat.save().then(function() {
                     var mailGenerator = new Mailgen({
                         theme: 'default',
                         product: {
@@ -247,7 +250,7 @@ exports.forgotPassword = (req, res, next) => {
                 var token = jwt.sign(payload, config.secret, {expiresIn: 60 * 60});
 
                 pt.forgotToken = token;
-                pat.save().then(() => {
+                pt.save().then(function() {
                     var mailGenerator = new Mailgen({
                         theme: 'default',
                         product: {
