@@ -24,7 +24,6 @@ module.exports.createPt = (req, res, next) => {
         secretAccessKey: config.AWS_SECRET_ACCESS_KEY
     }));
 
-
     models.pt.create({
         name: req.body.name,
         email: req.body.email,
