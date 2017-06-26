@@ -53,7 +53,11 @@ module.exports = function(sequelize, DataTypes) {
         weight: DataTypes.INTEGER,
         phoneProvider: DataTypes.STRING,
         surgeryNotes: DataTypes.TEXT,
-        ptNotes: DataTypes.TEXT
+        ptNotes: DataTypes.TEXT,
+        isVerified: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
+        }
     }, {
         classMethods: {
             associate: function(models) {

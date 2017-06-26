@@ -57,7 +57,6 @@ router.route('/agree')
 router.route('/agree')
     .get(auth.tokenRequired, auth.updateVerified);
 
-
 router.route('/login/pt')
     .post(auth.loginPt, ptSessions.createSession);   // keep this?
 
@@ -77,9 +76,11 @@ router.route('/reset/:token')
 router.route('/pts')
     .post(auth.adminRequired, pts.createPt);   // TODO add in authentication
 
-
 router.route('/pts/:id/isVerified')
     .get(auth.ptRequired, pts.isVerified);
+
+router.route('/patients/:id/isVerified')
+    .get(auth.tokenRequired, patients.isVerified);
 
 router.route('/pts/:id')
     .delete(auth.adminRequired, pts.deletePt); 

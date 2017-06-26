@@ -120,8 +120,6 @@ module.exports.isVerified = (req, res, next) => {
     var token = req.query.token || req.body.token || req.headers['x-access-token'];
     var decoded = jwt.verify(token, config.secret);
 
-    console.log('in ISVERIFIED CHECKING ==')
-    console.log(decoded.id == req.params.id);
     if(decoded.isPt && decoded.id == req.params.id)
     {
         models.pt.findOne({
@@ -129,12 +127,14 @@ module.exports.isVerified = (req, res, next) => {
                 id: req.params.id
             }
         }).then(function (pt) {
-            if(pt && Object.keys(pt).length !== 0)
+            if (pt && Object.keys(pt).length !== 0)
             {
-                if(pt.isVerified)
-                    return res.json({ptIsVerified: true});
-                else
-                    return res.json({ptIsVerified: false});
+                if (pt.isVerified) {
+                    return res.json({isVerified: true});
+                }
+                else {
+                    return res.json({isVerified: false});
+                }
             }
             else
             {

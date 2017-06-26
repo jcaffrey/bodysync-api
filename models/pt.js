@@ -46,8 +46,12 @@ module.exports = function(sequelize, DataTypes) {
         isAdmin: {
             type: DataTypes.BOOLEAN,
             defaultValue: false,
+        },
+        isVerified: {
+            type: DataTypes.BOOLEAN,
+            defaultValue: false
         }
-    }, {
+    },  {
         classMethods: {
             associate: function(models) {
                 pt.hasMany(models.patient); //, {onDelete: 'CASCADE'});

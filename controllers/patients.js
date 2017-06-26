@@ -288,3 +288,35 @@ module.exports.deletePatient = (req, res, next) => {
                             // Error: No default engine was specified and no extension was provided.
     });
 };
+
+module.exports.isVerified = (req, res, next) => {
+    var token = req.query.token || req.body.token || req.headers['x-access-token'];
+    var decoded = jwt.verify(token, config.secret);
+
+    if(!decoded.isPt && decoded.id == req.params.id)
+    {
+        models.patient.findOne({
+            where: {
+                id: req.params.id
+            }
+        }).then(function (pat) {
+            if (pat && Object.keys(pat).length !== 0)
+            {
+                if (pat.isVerified) {
+                    return res.json({isVerified: true});
+                }
+                else {
+                    return res.json({isVerified: false});
+                }
+            }
+            else
+            {
+                return res.status(404).send('no such patient found');
+            }
+        })
+    }
+    else
+    {
+        return res.status(403).send('not authorized');
+    }
+}
