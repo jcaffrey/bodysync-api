@@ -307,7 +307,6 @@ exports.forgotPassword = (req, res, next) => {
 // if frontend recieves success from here, they should redirect to login
 
 exports.resetPassword = (req, res, next) => {
-    console.log(typeof req.body.isPt)
     if(typeof req.body.isPt !== 'boolean' && typeof req.body.isPt !== 'string')
         return res.status(400).send('no isPt bool')
     if(typeof req.body.newPassword !== 'string')
@@ -327,11 +326,7 @@ exports.resetPassword = (req, res, next) => {
         }).then(function (pat) {
             if(Object.keys(pat).length !== 0)
             {
-                console.log('found pat' + pat.email);
-                // hash the newPassword and save it down as the hash
-                console.log('old hash' + pat.hash);
                 pat.hash = models.patient.generateHash(req.body.newPassword);
-                console.log('updated hash' + pat.hash);
                 pat.forgotToken = null;
                 pat.save().then(() => {
 
@@ -352,7 +347,7 @@ exports.resetPassword = (req, res, next) => {
                                 button: {
                                     color: '#2e3192',
                                     text: 'Login',
-                                    link: config.frontendServer + '/login/'
+                                    link: config.frontendServer
                                 }
 
                             }
@@ -395,7 +390,7 @@ exports.resetPassword = (req, res, next) => {
         }).then(function (pt) {
             if(Object.keys(pt).length !== 0)
             {
-                pt.hash = pt.generateHash(req.body.newPassword);
+                pt.hash = models.pt.generateHash(req.body.newPassword);
                 pt.forgotToken = null;
                 pt.save().then(() => {
 
@@ -415,7 +410,7 @@ exports.resetPassword = (req, res, next) => {
                                 button: {
                                     color: '#2e3192',
                                     text: 'Login',
-                                    link: config.frontendServer + '/login/'
+                                    link: config.frontendServer
                                 }
 
                             }
@@ -556,7 +551,3 @@ exports.checkRequestIdAgainstId = (req, res) => {
         return true;
     }
 }
-
-
-
-

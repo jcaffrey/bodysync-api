@@ -127,8 +127,12 @@ module.exports.updateExercise = (req, res, next) => {
                 exer.numRepsOrDuration = req.body.numRepsOrDuration || exer.numRepsOrDuration;
                 exer.ptNotes = req.body.ptNotes || exer.ptNotes;
 
-                exer.save().then(()=>{});
-                return res.json(exer);
+                exer.save().then(function () {
+                  return res.json(exer);
+                })
+                //
+                // exer.save().then(()=>{});
+                // return res.json(exer);
                 //return next();
             }
             else
