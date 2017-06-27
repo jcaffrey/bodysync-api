@@ -44,6 +44,11 @@ router.route('/')
     to pass as a parameter to a callback that could handle both in a single route
 */
 
+// for testing only
+// router.route('/findPatientsParanoid')
+//   .get(patients.findParanoid);
+
+
 router.route('/ptSessions/:patientId')  // logout will get -2 for patientId
     .get(auth.ptRequired, ptSessions.handleSession);
 

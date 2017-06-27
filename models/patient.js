@@ -78,7 +78,8 @@ module.exports = function(sequelize, DataTypes) {
             validHash : function(hash) {
                 return bcrypt.compareSync(hash, this.hash);
             }
-        }
+        },
+        paranoid: true
     });
 
     return patient;

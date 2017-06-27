@@ -250,6 +250,19 @@ module.exports.updatePatientNotes = (req, res, next) => {
     })
 }
 
+//
+// for testing only
+// module.exports.findParanoid = (req, res, next) => {
+//     models.patient.findAll({
+//         paranoid: false
+//     }).then(function (pats) {
+//         if(pats.length !== 0)
+//             res.json(pats)
+//         else
+//             res.json([]);
+//     })
+// }
+
 
 /**
 
