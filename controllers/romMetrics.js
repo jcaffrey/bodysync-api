@@ -30,7 +30,6 @@ module.exports.createRomMetric = (req, res, next) => {
                             injuryId: req.params.id
                         }).then(function(rom) {
                             return res.json(rom);
-                            //return next();
                         });
                     } else {
                         return res.status(401).send('PT unauthorized');
