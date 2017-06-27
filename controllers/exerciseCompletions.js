@@ -43,10 +43,9 @@ module.exports.createCompletion = (req, res, next) => {
 
                             mostRecent = mostRecent - 1;
 
-                            if(today - mostRecent === 1)  // TODO: does this work?
+                            if(today - mostRecent <= 1)  // TODO: does this work?
                             {
                                 // update the streak
-                                // console.log('type of exer.streak is ' + typeof exer.streak)
                                 exer.streak = exer.streak + 1;
                                 exer.save().then(function () {
                                     // post completion if so
@@ -70,9 +69,33 @@ module.exports.createCompletion = (req, res, next) => {
                                     return next(err);
                                 })
                             }
+                            else
+                            {
+                              // update the streak
+                              exer.streak = exer.streak + 1;
+                              exer.save().then(function () {
+                                // post completion if so
+                                models.exerciseCompletion.create({
+                                  painInput: req.body.painInput,
+                                  exerciseId: req.params.id
+                                }).then(function (comp) {
+                                  if(Object.keys(comp).length !== 0)
+                                  {
+                                    return res.json(comp);
+                                    // return next();
+                                  }
+                                  else
+                                  {
+                                    return res.status(404).send('could not create');
+                                  }
+                                }).catch(function (err) {
+                                  return next(err);
+                                })
+                              }).catch(function (err) {
+                                return next(err);
+                              })
+                            }
                             // else // TODO: still need to create the completion even if there isn't a streak..
-
-
                         }
                         else
                         {

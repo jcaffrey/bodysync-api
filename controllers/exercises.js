@@ -88,8 +88,6 @@ module.exports.getExercises = (req, res, next) => {
                 if(decoded.id == req.params.id)
                 {
                     return res.json(exercises);
-                    // res.json(exercises);
-                    // return next();
                 }
                 else
                 {
@@ -130,10 +128,7 @@ module.exports.updateExercise = (req, res, next) => {
                 exer.save().then(function () {
                   return res.json(exer);
                 })
-                //
-                // exer.save().then(()=>{});
-                // return res.json(exer);
-                //return next();
+
             }
             else
             {

@@ -21,11 +21,8 @@ var ses = require('nodemailer-ses-transport');
 
  */
 
-
 module.exports.createPatient = (req, res, next) => {
     if(auth.checkRequestIdAgainstId(req, res)) {
-        // TODO: send email to patient, update fields, route them same way the forgot password works?
-        // TODO: make sure that no pt has the same email as the patient
         models.pt.findAll({
             where: {
                 email: req.body.email
@@ -55,14 +52,6 @@ module.exports.createPatient = (req, res, next) => {
 
                         pat.forgotToken = token;
                         pat.save().then(() => {
-                            // email patient
-                            // var transporter = nodemailer.createTransport({
-                            //     service: 'gmail',
-                            //     auth: {
-                            //         user: config.emailFromAddr,
-                            //         pass: config.emailPw
-                            //     }
-                            // });
 
                         var transporter = nodemailer.createTransport(ses({
                             accessKeyId: config.AWS_ACCESS_KEY_ID,
