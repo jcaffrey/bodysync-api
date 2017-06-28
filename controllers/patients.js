@@ -31,7 +31,6 @@ module.exports.createPatient = (req, res, next) => {
             if(Object.keys(user).length !== 0) {
                 return res.status(405).send('sorry that email is taken');
             } else {
-                console.log('ABOUT TO CREATE PATIENT..')
                 models.patient.create({
                     name: req.body.name,
                     email: req.body.email,
@@ -42,6 +41,7 @@ module.exports.createPatient = (req, res, next) => {
                     isRestrictedFromRom: req.body.isRestrictedFromRom,
                     age: req.body.age,
                     weight: req.body.weight,
+                    isVerified: false,
                     ptId: req.params.id,
                     hash: "temp"
                 }).then(function(pat) {

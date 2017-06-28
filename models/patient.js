@@ -56,7 +56,8 @@ module.exports = function(sequelize, DataTypes) {
         ptNotes: DataTypes.TEXT,
         isVerified: {
             type: DataTypes.BOOLEAN,
-            defaultValue: false
+            defaultValue: false,
+            allowNull: false
         }
     }, {
         classMethods: {

@@ -30,6 +30,7 @@ module.exports.createPt = (req, res, next) => {
         proPicUrl: req.body.proPicUrl,
         phoneNumber: req.body.phoneNumber,
         phoneProvider: 'att',
+        isVerified: false,
         isAdmin: false,
         hash: 'temp'
     }).then(function(pt) {

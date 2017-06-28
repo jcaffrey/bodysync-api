@@ -49,7 +49,8 @@ module.exports = function(sequelize, DataTypes) {
         },
         isVerified: {
             type: DataTypes.BOOLEAN,
-            defaultValue: false
+            defaultValue: false,
+            allowNull: false
         }
     },  {
         classMethods: {
